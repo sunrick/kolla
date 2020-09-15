@@ -1,4 +1,4 @@
-require "kolla/version"
+require 'kolla/version'
 
 module Kolla
   class Error < StandardError; end
