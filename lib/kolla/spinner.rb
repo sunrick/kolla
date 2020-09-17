@@ -14,8 +14,8 @@ module Kolla
 
     def initialize(
       stream: $stdout,
-      animation: :default,
       before_animation: nil,
+      animation: Kolla.spinner[:animation],
       after_animation: ' ',
       before_status: nil,
       status: nil,
@@ -39,7 +39,7 @@ module Kolla
         elsif value.is_a?(Hash)
           Animation.new(value)
         else
-          Animation.new(ANIMATIONS[value])
+          Animation.new(Kolla.animations[value])
         end
     end
 

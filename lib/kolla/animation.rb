@@ -1,9 +1,4 @@
 module Kolla
-  ANIMATIONS = {
-    default: { frames: %w[⣾ ⣽ ⣻ ⢿ ⡿ ⣟ ⣯ ⣷], interval: 50, stop_frame: '✔' },
-    rickard: { frames: %w[1 2 3 4 5], interval: 50, stop_frame: '✔' }
-  }
-
   class Animation
     attr_accessor :name, :frames, :interval, :stop_frame, :index, :frame_count
     def initialize(name: nil, frames:, interval: 100, stop_frame: '✔', index: 0)
