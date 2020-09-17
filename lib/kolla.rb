@@ -1,5 +1,6 @@
 require 'paint'
 require 'progressbar'
+require 'terminal-table'
 
 require 'kolla/version'
 require 'kolla/animation'
@@ -333,6 +334,7 @@ Kolla::Display.start do |d|
           sleep 0.25
         end
       end
+      d.table { |t| t << ['one', 1] }
     end
 
     d.puts('sup')

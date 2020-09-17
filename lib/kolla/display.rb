@@ -45,6 +45,13 @@ module Kolla
       Progress.start(options, &block)
     end
 
+    def table(options = {}, &block)
+      table =
+        Terminal::Table.new(options, &block).to_s.split("\n").map do |line|
+          puts line
+        end
+    end
+
     def indent(times = 1, &block)
       self.indent_count += 1 * times
       yield
