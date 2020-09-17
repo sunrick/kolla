@@ -2,42 +2,75 @@ module Kolla
   # https://shiroyasha.svbtle.com/escape-sequences-a-quick-guide-1
   # https://en.wikipedia.org/wiki/ANSI_escape_code#CSI_codes
 
-  SPINNERS = {
-    default: { frames: %w[⣾ ⣽ ⣻ ⢿ ⡿ ⣟ ⣯ ⣷], interval: 50, stop: '✔' }
+  ANIMATIONS = {
+    default: { frames: %w[⣾ ⣽ ⣻ ⢿ ⡿ ⣟ ⣯ ⣷], interval: 50, stop_frame: '✔' },
+    rickard: { frames: %w[1 2 3 4 5], interval: 50, stop_frame: '✔' }
   }
+
+  class Animation
+    attr_accessor :name, :frames, :interval, :stop_frame, :index
+    def initialize(name: nil, frames:, interval: 100, stop_frame: '✔', index: 0)
+      self.name = name
+      self.frames = frames
+      self.interval = interval
+      self.stop_frame = stop_frame
+      self.index = index
+    end
+
+    def interval=(value)
+      @interval = value / 1_000.to_f
+    end
+
+    def current_frame
+      frames[index]
+    end
+
+    def frame_count
+      @frame_length ||= frames.length
+    end
+
+    def next_frame
+      if index + 1 < frame_count
+        self.index += 1
+      else
+        self.index = 0
+      end
+    end
+  end
 
   class Spinner
     attr_accessor :thread,
                   :stream,
-                  :before_spinner,
-                  :after_spinner,
+                  :before_animation,
+                  :animation,
+                  :after_animation,
                   :before_status,
                   :status,
                   :after_status,
-                  :done,
-                  :current_frame,
-                  :config
+                  :complete
 
     def initialize(
       stream: $stdout,
-      before_spinner: nil,
-      after_spinner: ' ',
+      animation: :default,
+      before_animation: nil,
+      after_animation: ' ',
       before_status: nil,
       status: nil,
       after_status: '... ',
-      done: nil,
-      spinner: :default
+      complete: nil
     )
       self.stream = stream
-      self.before_spinner = before_spinner
-      self.after_spinner = after_spinner
+      self.before_animation = before_animation
+      self.animation = animation
+      self.after_animation = after_animation
       self.before_status = before_status
       self.status = status
       self.after_status = after_status
-      self.done = done
+      self.complete = complete
+    end
 
-      self.current_frame = 0
-      self.config = SPINNERS[spinner]
+    def animation=(value)
+      @animation = Animation.new(value.is_a?(Hash) ? value : ANIMATIONS[value])
     end
 
     def self.start(options = {}, &block)
@@ -51,7 +84,7 @@ module Kolla
         Thread.new do
           while true
             render_current_frame
-            sleep(interval)
+            sleep(animation.interval)
           end
         end
 
@@ -92,50 +125,22 @@ module Kolla
       print("\e[1K\e[G")
     end
 
-    def render_frame(frame)
-      print(
-        "#{before_spinner}#{frame}#{after_spinner}#{before_status}#{status}#{
-          after_status
-        }"
-      )
-    end
-
     def render_current_frame
       clear_frame
       print(
-        "#{before_spinner}#{frames[current_frame]}#{after_spinner}#{
+        "#{before_animation}#{animation.current_frame}#{after_animation}#{
           before_status
         }#{status}#{after_status}"
       )
-      increment_frame
-    end
-
-    def increment_frame
-      if current_frame + 1 < frames.length
-        self.current_frame += 1
-      else
-        self.current_frame = 0
-      end
+      animation.next_frame
     end
 
     def render_stop_frame
       print(
-        "#{before_spinner}#{stop_frame}#{after_spinner}#{before_status}#{
-          status
-        }#{after_status}#{done}"
+        "#{before_animation}#{animation.stop_frame}#{after_animation}#{
+          before_status
+        }#{status}#{after_status}#{complete}"
       )
-    end
-
-    def interval
-      @interval ||= config[:interval] / 1_000.to_f
-    end
-
-    def frames
-      config[:frames]
-    end
-
-    def stop_frame
-      config[:stop]
     end
   end
 end

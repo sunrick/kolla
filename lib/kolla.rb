@@ -9,12 +9,21 @@ module Kolla
 end
 
 Kolla::Display.start do |d|
+  d.puts('Calculating how big of a virgin you are...')
   d.indent do
-    d.puts('Calculating how big of a virgin you are...')
+    d.spinner(status: 'Calculating age', complete: 'Done!') { sleep 2 }
+    d.spinner(status: 'Calculating sex', complete: 'Done!') { sleep 3 }
+    d.spinner(status: 'Calculating height', complete: 'Done!') { sleep 1 }
+
+    d.empty_line
+
     d.indent do
-      d.spinner(status: 'Calculating age', done: 'Done!') { sleep 2 }
-      d.spinner(status: 'Calculating sex', done: 'Done!') { sleep 3 }
-      d.spinner(status: 'Calculating height', done: 'Done!') { sleep 1 }
+      d.puts('Whatever my dudes...')
+      d.spinner(status: 'Calculating height', complete: 'Done!') do |s|
+        sleep 2
+        s.animation.interval = 200
+        sleep 3
+      end
     end
   end
 end

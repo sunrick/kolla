@@ -24,8 +24,12 @@ module Kolla
       stream.puts("#{indentor}#{Paint[*args]}")
     end
 
+    def empty_line
+      stream.puts
+    end
+
     def spinner(options = {}, &block)
-      Spinner.start({ before_spinner: indentor }.merge(options), &block)
+      Spinner.start({ before_animation: indentor }.merge(options), &block)
     end
 
     def indent(times = 1, &block)
