@@ -1,43 +1,6 @@
 module Kolla
   # https://shiroyasha.svbtle.com/escape-sequences-a-quick-guide-1
   # https://en.wikipedia.org/wiki/ANSI_escape_code#CSI_codes
-
-  ANIMATIONS = {
-    default: { frames: %w[⣾ ⣽ ⣻ ⢿ ⡿ ⣟ ⣯ ⣷], interval: 50, stop_frame: '✔' },
-    rickard: { frames: %w[1 2 3 4 5], interval: 50, stop_frame: '✔' }
-  }
-
-  class Animation
-    attr_accessor :name, :frames, :interval, :stop_frame, :index
-    def initialize(name: nil, frames:, interval: 100, stop_frame: '✔', index: 0)
-      self.name = name
-      self.frames = frames
-      self.interval = interval
-      self.stop_frame = stop_frame
-      self.index = index
-    end
-
-    def interval=(value)
-      @interval = value / 1_000.to_f
-    end
-
-    def current_frame
-      frames[index]
-    end
-
-    def frame_count
-      @frame_length ||= frames.length
-    end
-
-    def next_frame
-      if index + 1 < frame_count
-        self.index += 1
-      else
-        self.index = 0
-      end
-    end
-  end
-
   class Spinner
     attr_accessor :thread,
                   :stream,
@@ -70,7 +33,14 @@ module Kolla
     end
 
     def animation=(value)
-      @animation = Animation.new(value.is_a?(Hash) ? value : ANIMATIONS[value])
+      @animation =
+        if value.is_a?(Animation)
+          value
+        elsif value.is_a?(Hash)
+          Animation.new(value)
+        else
+          Animation.new(ANIMATIONS[value])
+        end
     end
 
     def self.start(options = {}, &block)

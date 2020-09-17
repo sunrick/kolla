@@ -1,5 +1,6 @@
 require 'paint'
 require 'kolla/version'
+require 'kolla/animation'
 require 'kolla/spinner'
 require 'kolla/display'
 
