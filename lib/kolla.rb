@@ -1,7 +1,10 @@
 require 'paint'
+require 'progressbar'
+
 require 'kolla/version'
 require 'kolla/animation'
 require 'kolla/spinner'
+require 'kolla/progress'
 require 'kolla/display'
 
 module Kolla
@@ -10,7 +13,7 @@ module Kolla
   extend self
 
   def spinner
-    { class: Kolla::Spinner, animation: :bouncingBar }
+    { class: Kolla::Spinner, animation: :arrow3 }
   end
 
   def animations=(value)
@@ -324,6 +327,14 @@ Kolla::Display.start do |d|
         s.animation.interval = 200
         sleep 3
       end
+      d.progress do |p|
+        50.times do
+          p.increment
+          sleep 0.25
+        end
+      end
     end
+
+    d.puts('sup')
   end
 end

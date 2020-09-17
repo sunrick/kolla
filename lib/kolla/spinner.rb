@@ -3,7 +3,7 @@ module Kolla
   # https://en.wikipedia.org/wiki/ANSI_escape_code#CSI_codes
   class Spinner
     attr_accessor :thread,
-                  :stream,
+                  :output,
                   :before_animation,
                   :animation,
                   :after_animation,
@@ -13,7 +13,7 @@ module Kolla
                   :complete
 
     def initialize(
-      stream: $stdout,
+      output: $stdout,
       before_animation: nil,
       animation: Kolla.spinner[:animation],
       after_animation: ' ',
@@ -22,7 +22,7 @@ module Kolla
       after_status: '... ',
       complete: nil
     )
-      self.stream = stream
+      self.output = output
       self.before_animation = before_animation
       self.animation = animation
       self.after_animation = after_animation
@@ -82,11 +82,11 @@ module Kolla
     end
 
     def new_line
-      stream.puts
+      output.puts
     end
 
     def print(value)
-      stream.print(value)
+      output.print(value)
     end
 
     # Clear from cursor to beginning of line

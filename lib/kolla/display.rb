@@ -1,8 +1,8 @@
 module Kolla
   class Display
-    attr_accessor :stream, :tab_size, :tab_character, :indent_count
-    def initialize(stream: $stdout, tab_size: 2, tab_character: ' ')
-      self.stream = stream
+    attr_accessor :output, :tab_size, :tab_character, :indent_count
+    def initialize(output: $stdout, tab_size: 2, tab_character: ' ')
+      self.output = output
       self.tab_size = tab_size
       self.tab_character = tab_character
       self.indent_count = 0
@@ -16,20 +16,33 @@ module Kolla
       tab_character * tab_size
     end
 
-    def indentor
+    def indentation
       tab * indent_count
     end
 
     def puts(*args)
-      stream.puts("#{indentor}#{Paint[*args]}")
+      output.puts("#{indentation}#{Paint[*args]}")
     end
 
     def empty_line
-      stream.puts
+      output.puts
+    end
+
+    def hide_cursor
+      output.print("\x1b[?25l")
+    end
+
+    def show_cursor
+      output.print("\x1b[?25h")
     end
 
     def spinner(options = {}, &block)
-      Spinner.start({ before_animation: indentor }.merge(options), &block)
+      Spinner.start({ before_animation: indentation }.merge(options), &block)
+    end
+
+    def progress(options = {}, &block)
+      options[:title] = "#{indentation}#{options[:title]}"
+      Progress.start(options, &block)
     end
 
     def indent(times = 1, &block)
