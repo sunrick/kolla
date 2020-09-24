@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # Get the paths of all files related to your commit
-FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
+# Ignores JSON files
+FILES=$(git diff --cached --name-only --diff-filter=ACMR ":(exclude)*/**.json" | sed 's| |\\ |g')
 [ -z "$FILES" ] && exit 0
 
 # Prettify all selected files
