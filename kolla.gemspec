@@ -35,10 +35,10 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'paint'
   spec.add_dependency 'progressbar'
   spec.add_dependency 'terminal-table'
-  spec.add_dependency 'prettier'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'prettier'
 end

@@ -1,8 +1,12 @@
 #!/bin/sh
+
+# Get the paths of all files related to your commit
 FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
 [ -z "$FILES" ] && exit 0
 
 # Prettify all selected files
+# Use rbprettier without bundle exec if you want to use global version
+# Fails and abandons commit if rbprettier fails
 echo "$FILES" | xargs bundle exec rbprettier --ignore-unknown --write || exit 1
 
 # Add back the modified/prettified files to staging

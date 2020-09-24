@@ -3,7 +3,6 @@ PATH
   specs:
     kolla (0.1.0)
       paint
-      prettier
       progressbar
       terminal-table
 
@@ -43,6 +42,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 2.0)
   kolla!
+  prettier
   pry
   rake (~> 10.0)
   rspec (~> 3.0)
