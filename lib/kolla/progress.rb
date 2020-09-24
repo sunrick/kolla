@@ -21,10 +21,6 @@ module Kolla
       empty_line
     end
 
-    def puts(*args)
-      output.stream.puts("#{indentation}#{Paint[*args]}")
-    end
-
     def empty_line
       output.stream.puts
     end
