@@ -1,4 +1,3 @@
-require 'pry'
 module Kolla
   class Progress < ProgressBar::Base
     def self.start(options = {}, &block)
