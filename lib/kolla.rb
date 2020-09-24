@@ -40,7 +40,7 @@ Kolla::Display.start do |d|
         s.animation.interval = 200
         sleep 3
       end
-      d.progress do |p|
+      d.progress(title: 'Dog') do |p|
         50.times do
           p.increment
           sleep 0.25
