@@ -6,7 +6,7 @@ module Kolla
     end
 
     attr_accessor :display
-    def initialize(title: Kolla.config.progress[:title], display:)
+    def initialize(title: Kolla.config.progress[:title], display: nil)
       self.display = display
       super(title: title)
     end
