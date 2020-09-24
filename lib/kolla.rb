@@ -43,6 +43,7 @@ Kolla::Display.start do |d|
       d.progress(title: 'Dog') do |p|
         50.times do
           p.increment
+          p.title = 'chicken'
           sleep 0.25
         end
       end

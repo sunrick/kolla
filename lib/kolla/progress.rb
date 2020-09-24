@@ -5,6 +5,16 @@ module Kolla
       new(options)._start(&block)
     end
 
+    attr_accessor :display
+    def initialize(title: '', display:)
+      self.display = display
+      super(title: title)
+    end
+
+    def title=(value)
+      super("#{display&.indentation}#{value}")
+    end
+
     def _start
       hide_cursor
       yield(self)

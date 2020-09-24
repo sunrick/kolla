@@ -46,7 +46,7 @@ module Kolla
 
     def progress(options = {}, &block)
       options[:title] = "#{indentation}#{options[:title]}"
-      Progress.start(options, &block)
+      Progress.start(options.merge(display: self), &block)
     end
 
     def table(options = {}, &block)
