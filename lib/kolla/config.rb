@@ -14,7 +14,7 @@ module Kolla
         File.read('./animations/default.json'),
         symbolize_names: true
       ),
-      progress: {},
+      progress: { title: '' },
       table: {},
       output: $stdout,
       tab_size: 2,
