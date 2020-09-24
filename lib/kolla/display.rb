@@ -47,9 +47,7 @@ module Kolla
 
     def table(options = {}, &block)
       table =
-        Terminal::Table.new(options, &block).to_s.split("\n").map do |line|
-          puts line
-        end
+        Table.new(options, &block).to_s.split("\n").map { |line| puts line }
     end
 
     def indent(times = 1, &block)

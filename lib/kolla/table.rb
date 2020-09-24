@@ -1,3 +1,3 @@
-# module Kolla
-#   class Table < TerminalTable; end
-# end
+module Kolla
+  class Table < Terminal::Table; end
+end
