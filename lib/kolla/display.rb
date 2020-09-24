@@ -1,7 +1,11 @@
 module Kolla
   class Display
     attr_accessor :output, :tab_size, :tab_character, :indent_count
-    def initialize(output: $stdout, tab_size: 2, tab_character: ' ')
+    def initialize(
+      output: Kolla.config.output,
+      tab_size: Kolla.config.tab_size,
+      tab_character: Kolla.config.tab_character
+    )
       self.output = output
       self.tab_size = tab_size
       self.tab_character = tab_character
@@ -47,7 +51,7 @@ module Kolla
 
     def table(options = {}, &block)
       table =
-        Table.new(options, &block).to_s.split("\n").map { |line| puts line }
+        Table.new(options, &block).to_s.split("\n").map { |line| puts(line) }
     end
 
     def indent(times = 1, &block)
