@@ -4,6 +4,7 @@ require 'terminal-table'
 require 'json'
 
 require 'kolla/version'
+require 'kolla/config'
 require 'kolla/animation'
 require 'kolla/spinner'
 require 'kolla/progress'
@@ -14,17 +15,12 @@ module Kolla
   class Error < StandardError; end
   extend self
 
-  def spinner
-    { class: Kolla::Spinner, animation: :arrow3 }
-  end
-
-  def animations=(value)
-    @animations = value
-  end
-
-  def animations
-    @animations ||=
-      JSON.parse(File.read('./animations/default.json'), symbolize_names: true)
+  def config
+    if block_given?
+      @config = yield(Config.new)
+    else
+      @config ||= Config.new
+    end
   end
 end
 
@@ -56,3 +52,5 @@ Kolla::Display.start do |d|
     d.puts('sup')
   end
 end
+
+# Kolla.config { |c| c.spinner = { class: Kolla::Spinner, animation: :dots1 } }
