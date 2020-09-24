@@ -24,7 +24,7 @@ module Kolla
       tab * indent_count
     end
 
-    def puts(*args)
+    def line(*args)
       output.puts("#{indentation}#{Paint[*args]}")
     end
 
@@ -50,8 +50,7 @@ module Kolla
     end
 
     def table(options = {}, &block)
-      table =
-        Table.new(options, &block).to_s.split("\n").map { |line| puts(line) }
+      Table.new(options, &block).to_s.split("\n").map { |l| line(l) }
     end
 
     def indent(times = 1, &block)

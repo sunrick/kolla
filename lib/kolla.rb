@@ -25,7 +25,7 @@ module Kolla
 end
 
 Kolla::Display.start do |d|
-  d.puts('Calculating how big of a virgin you are...')
+  d.line('Calculating how big of a virgin you are...')
   d.indent do
     d.spinner(status: 'Calculating age', complete: 'Done!') { sleep 2 }
     d.spinner(status: 'Calculating sex', complete: 'Done!') { sleep 3 }
@@ -34,7 +34,7 @@ Kolla::Display.start do |d|
     d.empty_line
 
     d.indent do
-      d.puts('Whatever my dudes...')
+      d.line('Whatever my dudes...')
       d.spinner(status: 'Calculating height', complete: 'Done!') do |s|
         sleep 2
         s.animation.interval = 200
@@ -50,7 +50,7 @@ Kolla::Display.start do |d|
       d.table { |t| t << ['one', 1] }
     end
 
-    d.puts('sup')
+    d.line('sup')
   end
 end
 

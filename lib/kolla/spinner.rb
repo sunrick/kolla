@@ -70,7 +70,7 @@ module Kolla
       clear_frame
       render_stop_frame
       show_cursor
-      new_line
+      line
     end
 
     def hide_cursor
@@ -81,7 +81,7 @@ module Kolla
       print("\x1b[?25h")
     end
 
-    def new_line
+    def line
       output.puts
     end
 
