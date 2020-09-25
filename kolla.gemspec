@@ -32,7 +32,6 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = %w[lib]
 
-  spec.add_dependency 'paint'
   spec.add_dependency 'progressbar'
   spec.add_dependency 'terminal-table'
 

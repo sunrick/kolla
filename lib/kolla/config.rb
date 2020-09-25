@@ -26,7 +26,24 @@ module Kolla
         throttle_rate: 0.01,
         unknown_progress_animation_steps: %w[=--- -=-- --=- ---=]
       },
-      table: { style: {}, headings: [], rows: [], title: nil },
+      table: {
+        style: {
+          border_x: '-',
+          border_y: '|',
+          border_i: '+',
+          border_top: true,
+          border_bottom: true,
+          padding_left: 1,
+          padding_right: 1,
+          margin_left: '',
+          width: nil,
+          alignment: nil,
+          all_separators: false
+        },
+        headings: [],
+        rows: [],
+        title: nil
+      },
       output: $stdout,
       tab_size: 2,
       tab_character: ' '

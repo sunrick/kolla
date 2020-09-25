@@ -12,8 +12,12 @@ module Kolla
       self.indent_count = 0
     end
 
-    def self.start
-      yield(new)
+    def self.start(&block)
+      if block.arity == 0
+        new.instance_eval(&block)
+      else
+        yield(new)
+      end
     end
 
     def tab
@@ -24,8 +28,8 @@ module Kolla
       tab * indent_count
     end
 
-    def line(*args)
-      output.puts("#{indentation}#{Paint[*args]}")
+    def line(value)
+      output.puts("#{indentation}#{value}")
     end
 
     def empty_line

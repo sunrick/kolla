@@ -1,7 +1,15 @@
 module Kolla
   class Animation
-    attr_accessor :name, :frames, :interval, :stop_frame, :index, :frame_count
-    def initialize(name: nil, frames:, interval: 100, stop_frame: '✔', index: 0)
+    attr_accessor :name,
+                  :frames,
+                  :interval,
+                  :stop_frame,
+                  :color,
+                  :index,
+                  :frame_count
+    def initialize(
+      name: nil, frames:, interval: 100, stop_frame: '✔', color: nil, index: 0
+    )
       self.name = name
       self.frames = frames
       self.interval = interval
