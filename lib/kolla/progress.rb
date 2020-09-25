@@ -5,9 +5,9 @@ module Kolla
     end
 
     attr_accessor :display
-    def initialize(title: Kolla.config.progress[:title], display: nil)
-      self.display = display
-      super(title: title)
+    def initialize(options = {})
+      self.display = options[:display]
+      super(Kolla.config.progress.merge(options))
     end
 
     def title=(value)

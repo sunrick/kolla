@@ -14,8 +14,19 @@ module Kolla
         File.read('./animations/default.json'),
         symbolize_names: true
       ),
-      progress: { title: '' },
-      table: {},
+      progress: {
+        title: 'Progress',
+        total: 100,
+        starting_at: 0,
+        progress_mark: '=',
+        remainder_mark: ' ',
+        format: '%t: |%B|',
+        length: 80,
+        smoothing: 0.1,
+        throttle_rate: 0.01,
+        unknown_progress_animation_steps: %w[=--- -=-- --=- ---=]
+      },
+      table: { style: {}, headings: [], rows: [], title: nil },
       output: $stdout,
       tab_size: 2,
       tab_character: ' '

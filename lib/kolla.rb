@@ -2,6 +2,7 @@ require 'paint'
 require 'progressbar'
 require 'terminal-table'
 require 'json'
+require 'ostruct'
 
 require 'kolla/version'
 require 'kolla/config'
@@ -27,18 +28,18 @@ end
 Kolla::Display.start do |d|
   d.line('Calculating how big of a virgin you are...')
   d.indent do
-    d.spinner(status: 'Calculating age', complete: 'Done!') { sleep 2 }
-    d.spinner(status: 'Calculating sex', complete: 'Done!') { sleep 3 }
-    d.spinner(status: 'Calculating height', complete: 'Done!') { sleep 1 }
+    d.spinner(status: 'Calculating age', complete: 'Done!') { sleep 0.5 }
+    d.spinner(status: 'Calculating sex', complete: 'Done!') { sleep 0.2 }
+    d.spinner(status: 'Calculating height', complete: 'Done!') { sleep 0.3 }
 
     d.empty_line
 
     d.indent do
       d.line('Whatever my dudes...')
       d.spinner(status: 'Calculating height', complete: 'Done!') do |s|
-        sleep 2
+        sleep 0.1
         s.animation.interval = 200
-        sleep 3
+        sleep 2
       end
       d.progress(title: 'Dog') do |p|
         50.times do
