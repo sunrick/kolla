@@ -2,9 +2,9 @@ module Kolla
   class Display
     attr_accessor :output, :tab_size, :tab_character, :indent_count
     def initialize(
-      output: Kolla.config.output,
-      tab_size: Kolla.config.tab_size,
-      tab_character: Kolla.config.tab_character
+      output: Kolla.config.display[:output],
+      tab_size: Kolla.config.display[:tab_size],
+      tab_character: Kolla.config.display[:tab_character]
     )
       self.output = output
       self.tab_size = tab_size

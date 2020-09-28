@@ -3,12 +3,13 @@ require 'terminal-table'
 require 'json'
 
 require 'kolla/version'
-require 'kolla/config'
+require 'kolla/utils'
 require 'kolla/animation'
 require 'kolla/spinner'
 require 'kolla/progress'
 require 'kolla/table'
 require 'kolla/display'
+require 'kolla/config'
 
 module Kolla
   class Error < StandardError; end
