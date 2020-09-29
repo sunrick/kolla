@@ -1,14 +1,11 @@
 module Kolla
   class Display
-    attr_accessor :output, :tab_size, :tab_character, :indent_count
-    def initialize(
-      output: Kolla.config.display[:output],
-      tab_size: Kolla.config.display[:tab_size],
-      tab_character: Kolla.config.display[:tab_character]
-    )
-      self.output = output
-      self.tab_size = tab_size
-      self.tab_character = tab_character
+    attr_accessor :options, :output, :tab_size, :tab_character, :indent_count
+    def initialize(opts = {})
+      self.options = Utils.merge(opts, Kolla.config.default_options)
+      self.output = options[:display][:output]
+      self.tab_size = options[:display][:tab_size]
+      self.tab_character = options[:display][:tab_character]
       self.indent_count = 0
     end
 
@@ -44,17 +41,23 @@ module Kolla
       output.print("\x1b[?25h")
     end
 
-    def spinner(options = {}, &block)
-      Spinner.start({ before_animation: indentation }.merge(options), &block)
+    def spinner(overrides = {}, &block)
+      overrides =
+        options[:spinner].merge({ before_animation: indentation }).merge(
+          overrides
+        )
+      Spinner.start(overrides, &block)
     end
 
-    def progress(options = {}, &block)
-      options[:title] = "#{indentation}#{options[:title]}"
-      Progress.start(options.merge(display: self), &block)
+    def progress(overrides = {}, &block)
+      overrides[:title] = "#{indentation}#{overrides[:title]}"
+      overrides = options[:progress].merge(display: self).merge(overrides)
+      Progress.start(overrides, &block)
     end
 
-    def table(options = {}, &block)
-      Table.new(options, &block).to_s.split("\n").map { |l| line(l) }
+    def table(overrides = {}, &block)
+      overrides = options[:table].merge(overrides)
+      Table.new(overrides, &block).to_s.split("\n").map { |l| line(l) }
     end
 
     def indent(times = 1, &block)

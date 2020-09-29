@@ -12,24 +12,17 @@ module Kolla
                   :after_status,
                   :complete
 
-    def initialize(
-      output: $stdout,
-      before_animation: nil,
-      animation: Kolla.config.spinner[:animation],
-      after_animation: ' ',
-      before_status: nil,
-      status: nil,
-      after_status: '... ',
-      complete: nil
-    )
-      self.output = output
-      self.before_animation = before_animation
-      self.animation = animation
-      self.after_animation = after_animation
-      self.before_status = before_status
-      self.status = status
-      self.after_status = after_status
-      self.complete = complete
+    def initialize(options = {})
+      options = Kolla.config.spinner.merge(options)
+
+      self.output = options[:output]
+      self.before_animation = options[:before_animation]
+      self.animation = options[:animation]
+      self.after_animation = options[:after_animation]
+      self.before_status = options[:before_status]
+      self.status = options[:status]
+      self.after_status = options[:after_status]
+      self.complete = options[:complete]
     end
 
     def animation=(value)

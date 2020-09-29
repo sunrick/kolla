@@ -2,7 +2,16 @@ module Kolla
   class Config
     DEFAULT_OPTIONS = {
       display: { output: $stdout, tab_size: 2, tab_character: ' ' },
-      spinner: { class: Kolla::Spinner, animation: :dots },
+      spinner: {
+        output: $stdout,
+        before_animation: nil,
+        animation: :dots,
+        after_animation: ' ',
+        before_status: nil,
+        status: nil,
+        after_status: '... ',
+        complete: nil
+      },
       animations:
         JSON.parse(
           File.read('./animations/default.json'),
@@ -43,7 +52,7 @@ module Kolla
     attr_accessor :display, :spinner, :animations, :progress, :table
 
     def initialize(options = {})
-      options = Utils.merge(options, DEFAULT_OPTIONS)
+      options = Utils.merge(options, default_options)
 
       self.display = options[:display]
       self.spinner = options[:spinner]
@@ -51,6 +60,10 @@ module Kolla
       self.progress = options[:progress]
       self.table = options[:table]
       self.display = options[:display]
+    end
+
+    def default_options
+      DEFAULT_OPTIONS
     end
   end
 end
