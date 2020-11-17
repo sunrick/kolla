@@ -1,8 +1,10 @@
 # Kolla
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/kolla`. To experiment with that code, run `bin/console` for an interactive prompt.
+This is just a fun experiment I was playing with. I was building a command line application that I wanted to show some fun-ish graphics for.
 
-TODO: Delete this and the text above, and describe your gem
+I experimented with code organization here, I wanted to make something that is configurable application wide but also you could use each class as a standalone object if you wanted.
+
+I won't be updating this code any time in the future, it was just a thing I wanted to try out!
 
 ## Installation
 
@@ -22,7 +24,38 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+Kolla::Display.start do
+  line('Calculating your life expectancy')
+  indent do
+    spinner(status: 'Calculating age', complete: 'Done!') { sleep 0.5 }
+    spinner(status: 'Calculating sex', complete: 'Done!') { sleep 0.2 }
+    spinner(status: 'Calculating height', complete: 'Done!') { sleep 0.3 }
+
+    empty_line
+
+    indent do
+      line('I am a random line...')
+      spinner(
+        status: 'Calculating life expectancy...', complete: 'Done!'
+      ) do |s|
+        sleep 0.1
+        s.animation.interval = 200
+        sleep 2
+      end
+      progress(title: 'What is going on?') do |p|
+        50.times do |i|
+          p.increment
+          sleep 0.25
+        end
+      end
+      table { |t| t << ['one', 1] }
+    end
+
+    line('Another random line')
+  end
+end
+```
 
 ## Development
 
